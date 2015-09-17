@@ -69,6 +69,13 @@ module Hadoop
     end
 
     #
+    # Return true if IOP
+    #
+    def iop?
+      node['hadoop']['distribution'] == 'iop'
+    end
+
+    #
     # Return true if Kerberos is enabled
     #
     # rubocop: disable Metrics/AbcSize
@@ -86,6 +93,8 @@ module Hadoop
     def hadoop_lib_dir
       if hdp22?
         "/usr/hdp/#{hdp_version}"
+      elsif iop?
+        "/usr/iop/#{node['hadoop']['distribution_version']}"
       else
         '/usr/lib'
       end
